@@ -1,13 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>首页</title>
     <link rel="stylesheet" href="./css/common.css">
+    <script src="./js/request.js"></script>
+    <style>
+        .list {
+            width: 100%;
+            padding: 20px 15px;
+        }
+
+        .item {
+            float: left;
+            margin: 10px 5px;
+            padding: 10px 5px;
+            width: 19%;
+        }
+
+        .item::after {
+            display: inline-block;
+            clear: both;
+            content: '';
+        }
+
+        .img>img {
+            width: 300px;
+            height: 200px;
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .info {
+            display: flex;
+            justify-content: space-around;
+        }
+    </style>
 </head>
+
 <body>
-    
+    <div class="list">
+        <!-- <div class="item">
+            <div class="img">
+                <img src="./assets/images/images/a.jpg" alt="">
+            </div>
+            <div class="title">
+                <span>咖啡</span>
+            </div>
+            <div class="info">
+                <div class="info-price"><span>￥59</span></div>
+                <div class="mack"><span>一起拼</span></div>
+            </div>
+        </div> -->
+    </div>
 </body>
+
+<script>
+    var page = 1;
+
+    function swipter() {
+
+    }
+
+    // 获取商品列表
+    function getShopList() {
+        REQUEST.get('/goodList', { params: { page: page } }, function (data) {
+            var html = ''
+            for (var i = 0; i < data.length; i++) {
+                var item = data[i]
+                html += `
+            <div class="item">
+                <div class="img">
+                    <img src="${item.img_list_url}" alt="">
+                </div>
+                <div class="title">
+                <span>${item.title}</span>
+                </div>
+                <div class="info">
+                    <div class="info-price"><span>${item.price}</span></div>
+                    ${item.mack}
+                </div>
+            </div>
+                `
+            }
+            list.innerHTML = html;
+        })
+    }
+</script>
+
 </html>
